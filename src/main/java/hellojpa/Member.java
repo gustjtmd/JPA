@@ -8,16 +8,17 @@ import java.util.Date;
 @Entity
 public class Member {
 
-    @Id
+    @Id @GeneratedValue
+    @Column(name = "MEMBER_ID")
     private String id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "USERNAME")
     private String username;
 
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
 
-    public Member(){
-
-    }
 
     public String getId() {
         return id;
@@ -33,5 +34,14 @@ public class Member {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+        team.getMembers().add(this);
     }
 }
